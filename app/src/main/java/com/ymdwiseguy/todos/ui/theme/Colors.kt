@@ -1,115 +1,182 @@
 package com.ymdwiseguy.todos.ui.theme
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@Suppress("unused")
-internal abstract class Palette {
-    val color0: Color = Color(0XFF000000)
-    val color100: Color = Color(0XFFFFFFFF)
-}
-
-internal object PrimaryPalette : Palette() {
-    val color10 = Color(0XFF001C39)
-    val color40 = Color(0XFF0060AC)
-    val color90 = Color(0XFFD2E4FF)
-}
-
-internal object SecondaryPalette : Palette() {
-    val color10 = Color(0XFF111C2B)
-    val color40 = Color(0XFF545F70)
-    val color90 = Color(0XFFD7E3F8)
-}
-
-internal object NeutralPalette : Palette() {
-    val color10 = Color(0XFF1B1B1B)
-}
-
-internal object NeutralVariantPalette : Palette() {
-    val color30 = Color(0XFF43474E)
-    val color50 = Color(0XFF73777F)
-    val color80 = Color(0xFFC3C6CF)
-    val color90 = Color(0XFFDFE2EB)
-    val color95 = Color(0XFFEDF0F9)
-}
-
-internal object ErrorPalette : Palette() {
-    val color10 = Color(0XFF410001)
-    val color40 = Color(0XFFBA1B1B)
-    val color90 = Color(0XFFFFDAD4)
-}
-
-
 @Composable
-@Preview
-private fun PreviewColors() {
-    TodosTheme {
+fun ColorsScreen() {
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(dimensions.gapM),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(dimensions.gapM)
+    ) {
+        item { Text("Colors", style = typography.titleLarge) }
 
-        Surface(modifier = Modifier.fillMaxSize()) {
-            Column(modifier = Modifier.padding(dimensions.gapL, 0.dp)) {
-                ColorTitleRow("Material Default:")
-                ColorRow("Primary", MaterialTheme.colorScheme.primary)
-                ColorRow("Secondary", MaterialTheme.colorScheme.secondary)
-                ColorRow("Background", MaterialTheme.colorScheme.background)
-                ColorRow("Surface", MaterialTheme.colorScheme.surface)
-                ColorRow("on Primary", MaterialTheme.colorScheme.onPrimary)
-                ColorRow("on Secondary", MaterialTheme.colorScheme.onSecondary)
-                ColorRow("on Background", MaterialTheme.colorScheme.onBackground)
-                ColorRow("on Surface", MaterialTheme.colorScheme.onSurface)
-                ColorRow("on Error", MaterialTheme.colorScheme.onError)
+        item {
+            PrimaryColorRow(
+                color = colors.primary,
+                onColor = colors.onPrimary,
+                container = colors.primaryContainer,
+                onContainer = colors.onPrimaryContainer,
+                name = "Primary"
+            )
+        }
 
-                ColorTitleRow("Material 3 Default:")
-                ColorRow("Secondary Container", colors.secondaryContainer)
-                ColorRow("on Secondary Container", colors.onSecondaryContainer)
-                ColorRow("Outline Color", colors.outline)
-                ColorRow("Error", colors.error)
-                ColorRow("Error Container", colors.errorContainer)
-                ColorRow("on Error Container", colors.onErrorContainer)
+        item {
+            PrimaryColorRow(
+                color = colors.secondary,
+                onColor = colors.onSecondary,
+                container = colors.secondaryContainer,
+                onContainer = colors.onSecondaryContainer,
+                name = "Secondary"
+            )
+        }
 
-            }
+        item {
+            SingleColorRow(
+                firstColor = colors.background,
+                firstTextColor = colors.onBackground,
+                firstColorName = "Background",
+                secondColor = colors.onBackground,
+                secondTextColor = colors.background,
+                secondColorName = "On Background",
+            )
+        }
+        item {
+            SingleColorRow(
+                firstColor = colors.surface,
+                firstTextColor = colors.onSurface,
+                firstColorName = "Surface",
+                secondColor = colors.onSurface,
+                secondTextColor = colors.surface,
+                secondColorName = "On Surface"
+            )
+        }
+        item {
+            SingleColorRow(
+                firstColor = colors.surfaceVariant,
+                firstTextColor = colors.onSurfaceVariant,
+                firstColorName = "Surface Variant",
+                secondColor = colors.onSurfaceVariant,
+                secondTextColor = colors.surfaceVariant,
+                secondColorName = "On Surface Variant"
+            )
+        }
+
+        item {
+            SingleColorRow(
+                firstColor = colors.outline,
+                firstTextColor = Color.White,
+                firstColorName = "Outline",
+                secondColor = colors.outlineVariant,
+                secondTextColor = Color.Black,
+                secondColorName = "Outline Variant"
+            )
+        }
+
+        item {
+            PrimaryColorRow(
+                color = colors.error,
+                onColor = colors.onError,
+                container = colors.errorContainer,
+                onContainer = colors.onErrorContainer,
+                name = "Error"
+            )
         }
     }
 }
 
 @Composable
-private fun ColorTitleRow(text: String) =
-    Row(Modifier.padding(0.dp, dimensions.gapM)) {
-        Text(text)
-    }
+fun PrimaryColorRow(
+    color: Color,
+    onColor: Color,
+    container: Color,
+    onContainer: Color,
+    name: String,
+) {
+    SingleColorRow(
+        firstColor = color,
+        firstTextColor = onColor,
+        firstColorName = name,
+        secondColor = onColor,
+        secondTextColor = color,
+        secondColorName = "On $name",
+    )
+    SingleColorRow(
+        firstColor = container,
+        firstTextColor = onContainer,
+        firstColorName = "$name Container",
+        secondColor = onContainer,
+        secondTextColor = container,
+        secondColorName = "on $name Container",
+    )
+}
 
 @Composable
-private fun ColorRow(text: String, hexValue: Color) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp, 0.dp, 16.dp, 4.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(text)
-        Box(
-            modifier = Modifier
-                .size(16.dp)
-                .clip(CircleShape)
-                .background(hexValue)
-                .border(1.dp, Color.Black, CircleShape)
+fun SingleColorRow(
+    firstColor: Color,
+    firstTextColor: Color,
+    firstColorName: String,
+    secondColor: Color,
+    secondTextColor: Color,
+    secondColorName: String,
+) {
+    Row {
+        ColorBox(
+            Modifier.weight(1f),
+            textColor = firstTextColor,
+            backgroundColor = firstColor,
+            label = firstColorName,
         )
+        ColorBox(
+            Modifier.weight(1f),
+            textColor = secondTextColor,
+            backgroundColor = secondColor,
+            label = secondColorName,
+        )
+    }
+}
+
+@Composable
+fun ColorBox(
+    modifier: Modifier = Modifier,
+    textColor: Color,
+    backgroundColor: Color,
+    label: String
+) {
+    Column(
+        modifier
+            .background(backgroundColor)
+            .requiredHeight(100.dp),
+        verticalArrangement = Arrangement.SpaceBetween,
+    ) {
+        Row(Modifier.padding(dimensions.gapS)) {
+            Text(
+                label,
+                color = textColor,
+                style = typography.labelSmall
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, widthDp = 520)
+@Composable
+fun ColorsScreenPreview() {
+    TodosTheme {
+        ColorsScreen()
     }
 }
