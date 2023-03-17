@@ -5,4 +5,8 @@ class CredentialsRepository(
 ) {
 
     fun getCredentials(): Credentials? = credentialsSharedPrefs.read()
+
+    fun setCredentials(credentials: Credentials) {
+        credentialsSharedPrefs.write(credentials = credentials)
+    }
 }

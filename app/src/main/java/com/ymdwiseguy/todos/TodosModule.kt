@@ -8,6 +8,7 @@ import com.ymdwiseguy.todos.repo.CredentialsRepository
 import com.ymdwiseguy.todos.repo.CredentialsSharedPrefs
 import com.ymdwiseguy.todos.repo.TodosApi
 import com.ymdwiseguy.todos.repo.TodosRepository
+import com.ymdwiseguy.todos.viewmodel.LoginViewModel
 import com.ymdwiseguy.todos.viewmodel.StartViewModel
 import com.ymdwiseguy.todos.viewmodel.TodosViewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
@@ -43,5 +44,6 @@ val todosModule = module {
 
     viewModelOf(::StartViewModel)
     viewModelOf(::TodosViewModel)
+    viewModelOf(::LoginViewModel)
 
 }

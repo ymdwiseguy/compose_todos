@@ -12,7 +12,7 @@ class CredentialsSharedPrefs(
 
     fun write(credentials: Credentials) = sharedPreferences.edit().putString(
         CREDENTIALS_KEY, adapter.toJson(credentials)
-    )
+    ).apply()
 
     fun read(): Credentials? = sharedPreferences.getString(CREDENTIALS_KEY, null)?.let {
         adapter.fromJson(it)
@@ -24,6 +24,6 @@ class CredentialsSharedPrefs(
 }
 
 data class Credentials(
-    val userName: String,
+    val username: String,
     val password: String,
 )

@@ -1,9 +1,8 @@
 package com.ymdwiseguy.todos
 
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.ymdwiseguy.todos.ui.screens.LoginScreen
 import com.ymdwiseguy.todos.ui.screens.StartScreen
 import com.ymdwiseguy.todos.ui.screens.TodosScreen
 import com.ymdwiseguy.todos.ui.theme.TodosTheme
@@ -16,7 +15,6 @@ import dev.olshevski.navigation.reimagined.rememberNavController
 @Composable
 fun MainScreen() {
 
-    // Implementation with "compose-navigation-reimagined"
     val navController = rememberNavController<Destination>(
         startDestination = Destination.Start
     )
@@ -50,20 +48,6 @@ private fun ResetNavigationBackstack(navController: NavController<Destination>) 
     navController.setNewBackstack(
         listOf(navController.backstack.entries.first())
     )
-}
-
-@Composable
-fun LoginScreen(
-    navigateToStartScreen: () -> Unit,
-    navigateToTodosScreen: () -> Unit
-) {
-    Text(text = "Login Screen")
-    Button(onClick = navigateToStartScreen) {
-        Text(text = "To Start Screen")
-    }
-    Button(onClick = navigateToTodosScreen) {
-        Text(text = "To Todos Screen")
-    }
 }
 
 @Preview(showBackground = true)
