@@ -19,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ymdwiseguy.todos.ui.theme.TodosTheme
+import com.ymdwiseguy.todos.ui.theme.dimensions
+import com.ymdwiseguy.todos.ui.theme.typography
 import com.ymdwiseguy.todos.viewmodel.LoginViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -62,7 +64,7 @@ data class LoginScreenStateHolder(
 private fun LoginScreenContent(loginScreenStateHolder: LoginScreenStateHolder) {
     Scaffold(
         bottomBar = {
-            Row(modifier = Modifier.fillMaxWidth().padding(16.dp), horizontalArrangement = Arrangement.End) {
+            Row(modifier = Modifier.fillMaxWidth().padding(dimensions.gapL), horizontalArrangement = Arrangement.End) {
             Button(onClick = loginScreenStateHolder.login) {
                 Text(text = "Login")
             }
@@ -72,11 +74,11 @@ private fun LoginScreenContent(loginScreenStateHolder: LoginScreenStateHolder) {
         Column(
             Modifier
                 .padding(it)
-                .padding(16.dp)) {
+                .padding(dimensions.gapL)) {
             Text(
                 text = "Login",
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(bottom = 16.dp)
+                style = typography.titleLarge,
+                modifier = Modifier.padding(bottom = dimensions.gapL)
             )
 
             Row(

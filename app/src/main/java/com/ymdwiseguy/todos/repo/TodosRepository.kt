@@ -9,18 +9,19 @@ class TodosRepository(
 ) {
 
     suspend fun getTodos(): List<Todo> {
+        val response = todosApi.getTodos()
+        return when{
+            response.isSuccessful && response.body() != null -> {
+                (response.body() as List<RemoteTodo>).map {
+                    Todo(it.name)
+                }
+            }
+            response.isSuccessful -> emptyList()
+            else -> throw HttpException(response)
+        }
+    }
 
-        return listOf(Todo("first todo"), Todo("second todo"))
-        // TODO: implement after login is available
-//        val response = todosApi.getTodos()
-//        return when{
-//            response.isSuccessful && response.body() != null -> {
-//                (response.body() as List<RemoteTodo>).map {
-//                    Todo(it.name)
-//                }
-//            }
-//            response.isSuccessful -> emptyList()
-//            else -> throw HttpException(response)
-//        }
+    suspend fun addTodo(todo: Todo){
+        // TODO: implement me
     }
 }

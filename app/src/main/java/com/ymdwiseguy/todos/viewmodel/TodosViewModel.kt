@@ -18,11 +18,21 @@ class TodosViewModel(
         private set
 
     fun refresh() {
-        // TODO: implement login first
         viewModelScope.launch {
             runCatching {
                 viewData = todosRepository.getTodos()
             }.onFailure {
+                Log.e("TodosViewModel", it.message, it)
+            }
+        }
+    }
+
+    fun addTodo(todo: Todo){
+        viewModelScope.launch {
+            runCatching {
+                todosRepository.addTodo(todo)
+            }.onFailure {
+                // TODO: add error view state and redirect to login
                 Log.e("TodosViewModel", it.message, it)
             }
         }

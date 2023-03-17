@@ -25,7 +25,10 @@ val todosModule = module {
     }
 
     single {
-        NetworkConfiguration.buildRetrofit(get())
+        NetworkConfiguration.buildRetrofit(
+            credentialsRepository = get(),
+            moshi = get(),
+        )
     }
 
     single {
