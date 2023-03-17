@@ -1,4 +1,4 @@
-package com.ymdwiseguy.todos
+package com.ymdwiseguy.todos.viewmodel
 
 import android.util.Log
 import androidx.compose.runtime.getValue

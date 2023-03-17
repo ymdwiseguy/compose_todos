@@ -4,6 +4,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.ymdwiseguy.todos.ui.screens.StartScreen
+import com.ymdwiseguy.todos.ui.screens.TodosScreen
 import com.ymdwiseguy.todos.ui.theme.TodosTheme
 import dev.olshevski.navigation.reimagined.NavBackHandler
 import dev.olshevski.navigation.reimagined.NavController
@@ -58,20 +60,6 @@ fun LoginScreen(
     Text(text = "Login Screen")
     Button(onClick = navigateToStartScreen) {
         Text(text = "To Start Screen")
-    }
-    Button(onClick = navigateToTodosScreen) {
-        Text(text = "To Todos Screen")
-    }
-}
-
-@Composable
-fun StartScreen(
-    navigateToLoginScreen: () -> Unit,
-    navigateToTodosScreen: () -> Unit
-) {
-    Text(text = "Start Screen")
-    Button(onClick = navigateToLoginScreen) {
-        Text(text = "To Login Screen")
     }
     Button(onClick = navigateToTodosScreen) {
         Text(text = "To Todos Screen")

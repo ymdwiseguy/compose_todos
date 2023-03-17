@@ -1,4 +1,4 @@
-package com.ymdwiseguy.todos
+package com.ymdwiseguy.todos.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -14,6 +14,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import com.ymdwiseguy.todos.R
+import com.ymdwiseguy.todos.viewmodel.TodosViewModel
 import com.ymdwiseguy.todos.domain.Todo
 import com.ymdwiseguy.todos.ui.theme.colors
 import com.ymdwiseguy.todos.ui.theme.dimensions
