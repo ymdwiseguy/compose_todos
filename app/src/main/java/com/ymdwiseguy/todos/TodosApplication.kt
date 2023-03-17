@@ -5,6 +5,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.ymdwiseguy.todos.NetworkConfiguration.buildRetrofit
 import com.ymdwiseguy.todos.repo.TodosApi
+import com.ymdwiseguy.todos.repo.TodosRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.context.startKoin

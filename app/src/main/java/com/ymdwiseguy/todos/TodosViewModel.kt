@@ -6,6 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ymdwiseguy.todos.domain.Todo
+import com.ymdwiseguy.todos.repo.TodosRepository
 import kotlinx.coroutines.launch
 
 class TodosViewModel(
@@ -16,6 +18,7 @@ class TodosViewModel(
         private set
 
     fun refresh() {
+        // TODO: implement login first
         viewModelScope.launch {
             runCatching {
                 viewData = todosRepository.getTodos()
