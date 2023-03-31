@@ -8,6 +8,9 @@ class TodosRepository(
     private val todosApi: TodosApi,
 ) {
 
+    // TODO: add shared prefs and store locally
+    // TODO: sync local data with remote data regularly / per socket?
+
     suspend fun getTodos(): List<Todo> {
         val response = todosApi.getTodos()
         return when{
@@ -22,6 +25,13 @@ class TodosRepository(
     }
 
     suspend fun addTodo(todo: Todo){
-        // TODO: implement me
+        val remoteTodo = RemoteTodo(
+            // TODO: add properly
+            uuid = "", name = todo.name, checked = "", deleted = "", modified = "", groupName = ""
+        )
+
+        val response = todosApi.storeTodos(remoteTodo)
+        if(!response.isSuccessful)
+            throw HttpException(response)
     }
 }
