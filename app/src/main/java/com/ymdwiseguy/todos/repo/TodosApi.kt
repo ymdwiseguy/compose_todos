@@ -12,5 +12,5 @@ interface TodosApi {
     suspend fun getTodos() : Response<List<RemoteTodo>>
 
     @POST("insert.php")
-    suspend fun storeTodos(@Body todo: RemoteTodo) : Response<RemoteTodo>
+    suspend fun storeTodos(@Body todo: RemoteTodo) : Response<Unit>
 }

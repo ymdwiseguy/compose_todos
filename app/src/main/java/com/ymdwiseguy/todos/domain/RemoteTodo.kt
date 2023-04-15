@@ -11,4 +11,13 @@ data class RemoteTodo(
     @Json(name = "deleted") val deleted: String,
     @Json(name = "modified") val modified: String,
     @Json(name = "group_name") val groupName: String,
-)
+){
+    constructor(todo: Todo) : this(
+        uuid = todo.uuid,
+        name = todo.name,
+        checked = todo.checked.toString(),
+        deleted = todo.deleted.toString(),
+        modified = todo.modified.toString(),
+        groupName = todo.groupName,
+    )
+}
