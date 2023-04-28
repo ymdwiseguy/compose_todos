@@ -1,18 +1,20 @@
 package com.ymdwiseguy.todos.repo
 
 import com.ymdwiseguy.todos.domain.Todo
+import kotlinx.coroutines.flow.map
 
 class TodosRepository(
     private val todosApi: TodosApi,
     private val todosDataStore: TodosDataStore,
 ) {
 
-    suspend fun addTodo(todo: Todo) {
-        todosDataStore.write(todo)
-    }
+    suspend fun addTodo(todo: Todo) = todosDataStore.write(todo)
 
-    fun getTodos() = todosDataStore.todosFlow()
+    suspend fun removeTodo(todo: Todo) = todosDataStore.remove(todo)
 
+    fun getTodos() = todosDataStore.todosFlow().map { it.sortedBy(Todo::sortIndex) }
+
+    suspend fun clearAll() = todosDataStore.clear()
 
     // TODO: sync local data with remote data regularly / per socket?
     suspend fun syncTodos() {
@@ -32,6 +34,7 @@ class TodosRepository(
 //        val response = todosApi.storeTodos(remoteTodo)
 //        if(!response.isSuccessful)
 //            throw HttpException(response)
-}
     }
+
+}
 

@@ -2,6 +2,7 @@ package com.ymdwiseguy.todos.repo
 
 import android.util.Log
 import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.MutablePreferences
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -36,6 +37,16 @@ class TodosDataStore(
                 }
             } else null
         }
+    }
+
+    suspend fun remove(todo: Todo) {
+        dataStore.edit { preferences ->
+            preferences.remove(stringPreferencesKey(todo.uuid))
+        }
+    }
+
+    suspend fun clear() {
+        dataStore.edit(MutablePreferences::clear)
     }
 
 }

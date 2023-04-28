@@ -18,13 +18,33 @@ class TodosViewModel(
         .getTodos()
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
+    // TODO: add error view state and redirect to login when not logged in
 
-    fun addTodo(todo: Todo){
+    fun addTodo(todo: Todo) {
         viewModelScope.launch {
             runCatching {
                 todosRepository.addTodo(todo)
             }.onFailure {
-                // TODO: add error view state and redirect to login when not logged in
+                Log.e("TodosViewModel", it.message, it)
+            }
+        }
+    }
+
+    fun removeTodo(todo: Todo) {
+        viewModelScope.launch {
+            runCatching {
+                todosRepository.removeTodo(todo)
+            }.onFailure {
+                Log.e("TodosViewModel", it.message, it)
+            }
+        }
+    }
+
+    fun clearAll() {
+        viewModelScope.launch {
+            runCatching {
+                todosRepository.clearAll()
+            }.onFailure {
                 Log.e("TodosViewModel", it.message, it)
             }
         }

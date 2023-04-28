@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 val dimensions @Composable get() = LocalDimensions.current
 val colors @Composable get() = MaterialTheme.colorScheme
 val typography @Composable get() = MaterialTheme.typography
+val shapes @Composable get() = MaterialTheme.shapes
 
 val LocalDimensions = compositionLocalOf { Dimensions() }
 

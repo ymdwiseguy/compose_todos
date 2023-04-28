@@ -9,6 +9,7 @@ import java.util.*
 data class Todo(
     @Json(name = "uuid") val uuid: String = UUID.randomUUID().toString(),
     @Json(name = "name") val name: String,
+    @Json(name = "sort_index") val sortIndex: Int? = null,
     @Json(name = "checked") val checked: Boolean = false,
     @Json(name = "deleted") val deleted: Boolean = false,
     @Json(name = "modified") val modified: OffsetDateTime = OffsetDateTime.now(),
@@ -17,6 +18,7 @@ data class Todo(
     constructor(remoteTodo: RemoteTodo) : this(
         uuid = remoteTodo.uuid,
         name = remoteTodo.name,
+        sortIndex = remoteTodo.sortIndex,
         checked = remoteTodo.checked.toBoolean(),
         deleted = remoteTodo.deleted.toBoolean(),
         modified = OffsetDateTime.parse(remoteTodo.modified),
