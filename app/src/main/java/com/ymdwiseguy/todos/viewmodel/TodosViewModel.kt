@@ -23,7 +23,9 @@ class TodosViewModel(
     fun addTodo(todo: Todo) {
         viewModelScope.launch {
             runCatching {
-                todosRepository.addTodo(todo)
+                val sortingIndex = (viewData.value.maxOfOrNull { it.sortIndex } ?: 0) + 1
+
+                todosRepository.addTodo(todo.copy(sortIndex = sortingIndex))
             }.onFailure(::handleFailure)
         }
     }
@@ -42,6 +44,10 @@ class TodosViewModel(
                 todosRepository.removeTodo(todo)
             }.onFailure(::handleFailure)
         }
+    }
+
+    fun moveTodo(todo: Todo, to: Int) {
+
     }
 
     fun clearAll() {

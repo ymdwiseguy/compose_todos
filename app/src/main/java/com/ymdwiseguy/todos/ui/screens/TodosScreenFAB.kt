@@ -14,7 +14,6 @@ fun TodosScreenFAB(addTodo: (Todo) -> Unit, viewData: List<Todo>) {
         addTodo(
             Todo(
                 name = UUID.randomUUID().toString(),
-                sortIndex = viewData.maxOf { it.sortIndex ?: 0 } + 1
             )
         )
     }) {
