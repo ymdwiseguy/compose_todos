@@ -14,21 +14,30 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+interface TodosDataStoreInterface{
+    fun todosFlow(): Flow<List<Todo>>
+
+    suspend fun write(todo: Todo)
+    suspend fun updateTodo(todo: Todo)
+    suspend fun remove(todo: Todo)
+    suspend fun clear()
+}
+
 class TodosDataStore(
     private val dataStore: DataStore<Preferences>,
     private val dispatcher: CoroutineDispatcher,
     moshi: Moshi
-) {
+) : TodosDataStoreInterface {
 
     private val adapter = moshi.adapter(Todo::class.java)
 
-    suspend fun write(todo: Todo) {
+    override suspend fun write(todo: Todo) {
         dataStore.edit { preferences ->
             preferences[stringPreferencesKey(todo.uuid)] = adapter.toJson(todo)
         }
     }
 
-    fun todosFlow(): Flow<List<Todo>> = dataStore.data.map { preferences ->
+    override fun todosFlow(): Flow<List<Todo>> = dataStore.data.map { preferences ->
         preferences.asMap().mapNotNull { entry ->
             val value = entry.value
             if (value is String) {
@@ -42,18 +51,20 @@ class TodosDataStore(
         }
     }
 
-    suspend fun remove(todo: Todo) {
+    override suspend fun remove(todo: Todo) {
         dataStore.edit { preferences ->
             preferences.remove(stringPreferencesKey(todo.uuid))
         }
     }
 
-    suspend fun clear() {
+    override suspend fun clear() {
         dataStore.edit(MutablePreferences::clear)
     }
 
-    suspend fun updateTodo(todo: Todo) = dataStore.edit { preferences ->
-        preferences[stringPreferencesKey(todo.uuid)] = adapter.toJson(todo)
+    override suspend fun updateTodo(todo: Todo) {
+        dataStore.edit { preferences ->
+            preferences[stringPreferencesKey(todo.uuid)] = adapter.toJson(todo)
+        }
     }
 
     private suspend fun deleteCorruptedEntry(entry: Map.Entry<Preferences.Key<*>, Any>) = withContext(dispatcher) {

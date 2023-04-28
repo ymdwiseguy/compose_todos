@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.map
 
 class TodosRepository(
     private val todosApi: TodosApi,
-    private val todosDataStore: TodosDataStore,
+    private val todosDataStore: TodosDataStoreInterface,
 ) {
 
     suspend fun addTodo(todo: Todo) = todosDataStore.write(todo)

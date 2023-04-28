@@ -11,8 +11,9 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.ymdwiseguy.todos.repo.CredentialsRepository
 import com.ymdwiseguy.todos.repo.CredentialsSharedPrefs
 import com.ymdwiseguy.todos.repo.TodosApi
-import com.ymdwiseguy.todos.repo.TodosRepository
 import com.ymdwiseguy.todos.repo.TodosDataStore
+import com.ymdwiseguy.todos.repo.TodosDataStoreInterface
+import com.ymdwiseguy.todos.repo.TodosRepository
 import com.ymdwiseguy.todos.repo.adapter.OffsetDateTimeAdapter
 import com.ymdwiseguy.todos.viewmodel.LoginViewModel
 import com.ymdwiseguy.todos.viewmodel.StartViewModel
@@ -20,6 +21,7 @@ import com.ymdwiseguy.todos.viewmodel.TodosViewModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.factoryOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
@@ -66,7 +68,7 @@ val todosModule = module {
             dispatcher = Dispatchers.IO,
             moshi = get(),
         )
-    }
+    } bind (TodosDataStoreInterface::class)
 
     factory { (get<Retrofit>().create(TodosApi::class.java)) }
 
@@ -76,5 +78,4 @@ val todosModule = module {
     viewModelOf(::StartViewModel)
     viewModelOf(::TodosViewModel)
     viewModelOf(::LoginViewModel)
-
 }

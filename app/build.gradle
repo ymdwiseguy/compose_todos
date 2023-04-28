@@ -58,11 +58,17 @@ android {
     }
 }
 
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
+
 dependencies {
 
 //    implementation 'androidx.core:core-ktx:1.10.0'
+    def coroutines = '1.6.4'
     def composeBom = '2023.04.00'
     def lifecycle = "2.6.1"
+    def junitVersion = "5.9.1"
 
     // Jetpack Compose
     implementation platform("androidx.compose:compose-bom:$composeBom")
@@ -105,9 +111,13 @@ dependencies {
     implementation("androidx.datastore:datastore:1.0.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
-    // Testing / TODO: use junit 5
-//    testImplementation 'junit:junit:4.13.2'
-//    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-
+    // Testing
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    testRuntimeOnly("org.junit.platform:junit-platform-reporting:1.9.2")
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${kotlin_version}"
+    testImplementation 'io.mockk:mockk:1.13.4'
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
 }
