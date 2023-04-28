@@ -15,7 +15,7 @@ class TodosViewModel(
 ) : ViewModel() {
 
     val viewData: StateFlow<List<Todo>> = todosRepository
-        .getTodos()
+        .getTodosFlow()
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     // TODO: add error view state and redirect to login when not logged in
@@ -24,9 +24,15 @@ class TodosViewModel(
         viewModelScope.launch {
             runCatching {
                 todosRepository.addTodo(todo)
-            }.onFailure {
-                Log.e("TodosViewModel", it.message, it)
-            }
+            }.onFailure(::handleFailure)
+        }
+    }
+
+    fun updateTodo(todo: Todo) {
+        viewModelScope.launch {
+            runCatching {
+                todosRepository.updateTodo(todo)
+            }.onFailure(::handleFailure)
         }
     }
 
@@ -34,9 +40,7 @@ class TodosViewModel(
         viewModelScope.launch {
             runCatching {
                 todosRepository.removeTodo(todo)
-            }.onFailure {
-                Log.e("TodosViewModel", it.message, it)
-            }
+            }.onFailure(::handleFailure)
         }
     }
 
@@ -44,9 +48,11 @@ class TodosViewModel(
         viewModelScope.launch {
             runCatching {
                 todosRepository.clearAll()
-            }.onFailure {
-                Log.e("TodosViewModel", it.message, it)
-            }
+            }.onFailure(::handleFailure)
         }
+    }
+
+    private fun handleFailure(it: Throwable) {
+        Log.e("TodosViewModel", it.message, it)
     }
 }

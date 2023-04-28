@@ -12,13 +12,14 @@ class TodosRepository(
 
     suspend fun removeTodo(todo: Todo) = todosDataStore.remove(todo)
 
-    fun getTodos() = todosDataStore.todosFlow().map { it.sortedBy(Todo::sortIndex) }
+    fun getTodosFlow() = todosDataStore.todosFlow().map { it.sortedBy(Todo::sortIndex) }
+
+    suspend fun updateTodo(todo: Todo) = todosDataStore.updateTodo(todo)
 
     suspend fun clearAll() = todosDataStore.clear()
 
-    // TODO: sync local data with remote data regularly / per socket?
     suspend fun syncTodos() {
-        TODO()
+        TODO("sync local data with remote data regularly / per socket?")
 //        val response = todosApi.getTodos()
 //        return when{
 //            response.isSuccessful && response.body() != null -> {
@@ -35,6 +36,7 @@ class TodosRepository(
 //        if(!response.isSuccessful)
 //            throw HttpException(response)
     }
+
 
 }
 

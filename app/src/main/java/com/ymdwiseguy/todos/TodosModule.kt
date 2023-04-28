@@ -17,6 +17,7 @@ import com.ymdwiseguy.todos.repo.adapter.OffsetDateTimeAdapter
 import com.ymdwiseguy.todos.viewmodel.LoginViewModel
 import com.ymdwiseguy.todos.viewmodel.StartViewModel
 import com.ymdwiseguy.todos.viewmodel.TodosViewModel
+import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
@@ -62,6 +63,7 @@ val todosModule = module {
                         .preferencesDataStoreFile(TODOS_DATA_STORE_NAME)
                 },
             ),
+            dispatcher = Dispatchers.IO,
             moshi = get(),
         )
     }

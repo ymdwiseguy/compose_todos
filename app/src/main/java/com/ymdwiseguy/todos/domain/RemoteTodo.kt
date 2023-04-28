@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 data class RemoteTodo(
     @Json(name = "uuid") val uuid: String,
     @Json(name = "name") val name: String,
-    @Json(name = "sort_index") val sortIndex: Int? = null,
+    @Json(name = "sort_index") val sortIndex: Int,
     @Json(name = "checked") val checked: String,
     @Json(name = "deleted") val deleted: String,
     @Json(name = "modified") val modified: String,
