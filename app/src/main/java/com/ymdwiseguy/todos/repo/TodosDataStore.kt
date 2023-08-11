@@ -18,7 +18,6 @@ interface TodosDataStoreInterface{
     fun todosFlow(): Flow<List<Todo>>
 
     suspend fun write(todo: Todo)
-    suspend fun updateTodo(todo: Todo)
     suspend fun remove(todo: Todo)
     suspend fun clear()
 }
@@ -59,12 +58,6 @@ class TodosDataStore(
 
     override suspend fun clear() {
         dataStore.edit(MutablePreferences::clear)
-    }
-
-    override suspend fun updateTodo(todo: Todo) {
-        dataStore.edit { preferences ->
-            preferences[stringPreferencesKey(todo.uuid)] = adapter.toJson(todo)
-        }
     }
 
     private suspend fun deleteCorruptedEntry(entry: Map.Entry<Preferences.Key<*>, Any>) = withContext(dispatcher) {

@@ -96,7 +96,7 @@ internal class TodosViewModelTest {
 
                 addTodo(todo1)
 
-                updateTodo(todo1.copy(name = "updated first to do"))
+                updateTodo("updated first to do")
 
                 viewData.value.first().name shouldBe "updated first to do"
             }

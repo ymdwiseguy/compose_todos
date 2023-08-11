@@ -14,7 +14,7 @@ class TodosRepository(
 
     fun getTodosFlow() = todosDataStore.todosFlow().map { it.sortedBy(Todo::sortIndex) }
 
-    suspend fun updateTodo(todo: Todo) = todosDataStore.updateTodo(todo)
+    suspend fun updateTodo(todo: Todo) = todosDataStore.write(todo)
 
     suspend fun clearAll() = todosDataStore.clear()
 

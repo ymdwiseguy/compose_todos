@@ -24,14 +24,6 @@ class TodosTestDataStore : TodosDataStoreInterface {
         }
     }
 
-    override suspend fun updateTodo(todo: Todo) {
-        datastore.update {
-            it.toMutableMap().apply {
-                put(todo.uuid, todo)
-            }
-        }
-    }
-
     override suspend fun remove(todo: Todo) {
         datastore.update {
             val updatedMap: MutableMap<String, Todo> = it.toMutableMap()

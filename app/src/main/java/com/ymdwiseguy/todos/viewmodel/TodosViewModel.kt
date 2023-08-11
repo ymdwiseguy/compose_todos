@@ -1,6 +1,9 @@
 package com.ymdwiseguy.todos.viewmodel
 
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ymdwiseguy.todos.domain.Todo
@@ -18,6 +21,17 @@ class TodosViewModel(
         .getTodosFlow()
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
+    var todoBeingEdited: Todo? by mutableStateOf(null)
+        private set
+
+    fun showEditDialog(todo: Todo) {
+        todoBeingEdited = todo
+    }
+
+    fun hideEditDialog() {
+        todoBeingEdited = null
+    }
+
     // TODO: add error view state and redirect to login when not logged in
 
     fun addTodo(todo: Todo) {
@@ -30,10 +44,16 @@ class TodosViewModel(
         }
     }
 
-    fun updateTodo(todo: Todo) {
+    fun updateTodo(name: String) {
         viewModelScope.launch {
             runCatching {
-                todosRepository.updateTodo(todo)
+                todoBeingEdited?.let {
+                    val updatedTodo = it.copy(
+                        name = name
+                    )
+                    todosRepository.updateTodo(updatedTodo)
+
+                }
             }.onFailure(::handleFailure)
         }
     }
@@ -47,7 +67,7 @@ class TodosViewModel(
     }
 
     fun moveTodo(todo: Todo, to: Int) {
-
+        TODO()
     }
 
     fun clearAll() {

@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -15,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ymdwiseguy.todos.domain.Todo
+import com.ymdwiseguy.todos.ui.EditTodoDialog
 import com.ymdwiseguy.todos.ui.theme.TodosTheme
 import com.ymdwiseguy.todos.viewmodel.TodosViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -32,21 +32,28 @@ fun TodosScreen(
         navigateToStartScreen = navigateToStartScreen,
         navigateToLoginScreen = navigateToLoginScreen,
         addTodo = viewModel::addTodo,
+        updateTodo = viewModel::updateTodo,
         removeTodo = viewModel::removeTodo,
         clearAll = viewModel::clearAll,
+        showEditDialog = viewModel::showEditDialog,
+        hideEditDialog = viewModel::hideEditDialog,
         viewData = viewData,
+        editDialogVisible = viewModel.todoBeingEdited
     )
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
 private fun TodosScreenContent(
     navigateToStartScreen: () -> Unit,
     navigateToLoginScreen: () -> Unit,
     addTodo: (Todo) -> Unit,
+    updateTodo: (String) -> Unit,
     removeTodo: (Todo) -> Unit,
     clearAll: () -> Unit,
-    viewData: List<Todo>
+    showEditDialog: (Todo) -> Unit,
+    hideEditDialog: () -> Unit,
+    viewData: List<Todo>,
+    editDialogVisible: Todo?,
 ) {
     Scaffold(
         topBar = { TodosScreenTopAppBar(clearAll) },
@@ -60,10 +67,15 @@ private fun TodosScreenContent(
             contentPadding = PaddingValues(bottom = 120.dp)
         ) {
             viewData.map {
-                item { TodoItem(it, removeTodo) }
+                item { TodoItem(it, removeTodo, showEditDialog) }
             }
         }
     }
+
+    editDialogVisible?.let {
+        EditTodoDialog(save = updateTodo, close = hideEditDialog, it)
+    }
+
 }
 
 @Preview
@@ -95,9 +107,13 @@ private fun TodosScreenPreview() {
             navigateToStartScreen = {},
             navigateToLoginScreen = {},
             addTodo = ::addTodo,
+            updateTodo = {},
             removeTodo = ::removeTodo,
             clearAll = ::clearAll,
-            viewData = todos
+            showEditDialog = {},
+            hideEditDialog = {},
+            viewData = todos,
+            editDialogVisible = null,
         )
     }
 }

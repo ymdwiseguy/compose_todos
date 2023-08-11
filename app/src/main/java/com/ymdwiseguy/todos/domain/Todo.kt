@@ -8,7 +8,7 @@ import java.util.*
 @JsonClass(generateAdapter = true)
 data class Todo(
     @Json(name = "uuid") val uuid: String = UUID.randomUUID().toString(),
-    @Json(name = "name") val name: String,
+    @Json(name = "name") val name: String = "",
     @Json(name = "sort_index") val sortIndex: Int = 0,
     @Json(name = "checked") val checked: Boolean = false,
     @Json(name = "deleted") val deleted: Boolean = false,

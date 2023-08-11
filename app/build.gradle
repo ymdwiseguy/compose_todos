@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -7,7 +9,7 @@ plugins {
 
 android {
     namespace 'com.ymdwiseguy.todos'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.ymdwiseguy.todos"
@@ -34,7 +36,7 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    tasks.withType(KotlinCompile).configureEach {
         kotlinOptions {
             jvmTarget = JavaVersion.VERSION_17
         }
@@ -49,7 +51,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion '1.4.8'
+        kotlinCompilerExtensionVersion '1.5.1'
     }
     packagingOptions {
         resources {
@@ -58,17 +60,17 @@ android {
     }
 }
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
     useJUnitPlatform()
 }
 
 dependencies {
 
 //    implementation 'androidx.core:core-ktx:1.10.0'
-    def coroutines = '1.6.4'
-    def composeBom = '2023.06.01'
+    def coroutines = "1.7.2"
+    def composeBom = "2023.08.00"
     def lifecycle = "2.6.1"
-    def junitVersion = "5.9.3"
+    def junitVersion = "5.10.0"
 
     // Jetpack Compose
     implementation platform("androidx.compose:compose-bom:$composeBom")
@@ -94,9 +96,9 @@ dependencies {
     implementation "androidx.activity:activity-ktx:1.7.2"
     
     // Koin
-    implementation "io.insert-koin:koin-core:3.4.2"
-    implementation "io.insert-koin:koin-android:3.4.2"
-    implementation "io.insert-koin:koin-androidx-compose:3.4.3"
+    implementation "io.insert-koin:koin-core:3.4.3"
+    implementation "io.insert-koin:koin-android:3.4.3"
+    implementation "io.insert-koin:koin-androidx-compose:3.4.5"
 
     // Moshi
     implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
@@ -115,7 +117,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
-    testRuntimeOnly("org.junit.platform:junit-platform-reporting:1.9.3")
+    testRuntimeOnly("org.junit.platform:junit-platform-reporting:1.10.0")
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${kotlin_version}"
     testImplementation "io.mockk:mockk:1.13.5"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
